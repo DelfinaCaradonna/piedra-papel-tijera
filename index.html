@@ -3,59 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        #partida {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-        }
-
-        span {
-            width: 250px;
-            height: 250px;
-        }
-
-        #imagenes {
-            display: flex;
-            justify-content: center;
-        }
-        
-        #imagenes img:hover {
-            cursor: pointer;
-        }
-
-        img {
-            margin: 30px;
-        }
-
-    </style>
+    <title>Piedra, papel o tijera</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Piedra, papel o tijera</h1>
+    <h1>• PIEDRA, PAPEL O TIJERA •</h1>
 
     <!--Jugada-->
     <div id="partida">
         <span>
-            <h2>Player</h2>
+            <h2 id="nombre">Jugador</h2>
             <img src="" alt="" width="100" id="jugador">
-            <p id="textoJugador"></p>
         </span>
 
         <span >
-            <h2>Pc</h2>
+            <h2>PC</h2>
             <img src="" alt="" width="100" id="pc">
-            <p id="textoPc"></p>
         </span>
     </div>
 
     <!--Resultado-->
-    <div>
-        <p id="resultado"></p>
-        <p>Jugados</p><output id="jugados"></output></p>
-        <p>Ganados<output id="ganados"></output></p>
-        <p>Perdidos<output id="perdidos"></output></p>
-        <p>Empatados<output id="empatados"></output></p>
+    <div id="result">
+            <p id="resultado">Resultado</p> 
+            <div class="contenido"><p>Round</p><output id="jugados"></output></p></div>
+        <div id="content">
+            <div class="contenido"><p id="nombre2">Jugador</p><output id="ganados"></output></div>
+            <div class="contenido"><p>Empatados</p><output id="empatados"></output></div>
+            <div class="contenido"><p>PC</p><output id="perdidos"></output></div>
+        </div>
     </div>
 
     <!--Botones-->
@@ -74,8 +51,10 @@
         let ganados = 0;
         let perdidos = 0;
         let empatados = 0;
+        let nombre = prompt("Cómo te llamas?")
 
- 
+        document.querySelector('#nombre').innerHTML= nombre
+        document.querySelector('#nombre2').innerHTML= nombre
 
             const aleatorio=()=>{
                 let numero = Math.floor((Math.random()*3)+1)
@@ -91,22 +70,18 @@
             }
 
             const logicaJuego=(usr, pc)=>{
-                console.log(usr, pc)
                 if(usr===pc){
-                    console.log("empate")
                     empatados ++
                     document.querySelector('#empatados').textContent= empatados
                     document.querySelector("#resultado").innerHTML = "Empate"
                 } else if((usr==="piedra" && pc==="papel") || (usr==="tijera" && pc==="piedra") || (usr==="papel" && pc==="tijera")){
-                    console.log("gano la compu")
                     perdidos ++
                     document.querySelector('#perdidos').textContent= perdidos
-                    document.querySelector("#resultado").innerHTML = "Gano la compu"
+                    document.querySelector("#resultado").innerHTML = "Ganó la PC"
                 }else {
-                    console.log("gano el usuario")
                     ganados ++
                     document.querySelector('#ganados').textContent= ganados
-                    document.querySelector("#resultado").innerHTML = "Gano el usuario"
+                    document.querySelector("#resultado").innerHTML = `Ganó ${nombre}`
                    }
                 }
             
@@ -117,7 +92,6 @@
 
             for(let opcion of opciones){
                 opcion.addEventListener('click', function(e){
-                    //console.log(e.target.id)
                     decisionUsuario = e.target.id
                     if(decisionUsuario==='piedra') jugador.src = imagenes[0]
                     if(decisionUsuario==='papel') jugador.src = imagenes[1]
@@ -130,85 +104,7 @@
                     partidos++
                     document.querySelector('#jugados').textContent= partidos
                 })
-            }
-
-            /* document.querySelector('#piedra').addEventListener('click', function () {
-                    //document.querySelector('#textoJugador').innerHTML = texto[0];
-                    decisionUsuario = "piedra"
-                    decisionPC = aleatorio()
-                    jugador.src = imagenes[0];
-                    if(decisionPC==='piedra') pc.src = imagenes[0]
-                    if(decisionPC==='papel') pc.src = imagenes[1]
-                    if(decisionPC==='tijera') pc.src = imagenes[2]
-                    logicaJuego(decisionUsuario, decisionPC)
-                });
-
-            document.querySelector('#papel').addEventListener('click', function () {
-                    //document.querySelector('#textoJugador').innerHTML = texto[0];
-                    decisionUsuario = "papel"
-                    decisionPC = aleatorio()
-                    jugador.src = imagenes[1];
-                    if(decisionPC==='piedra') pc.src = imagenes[0]
-                    if(decisionPC==='papel') pc.src = imagenes[1]
-                    if(decisionPC==='tijera') pc.src = imagenes[2]
-                    logicaJuego(decisionUsuario, decisionPC)
-                });
-
-            document.querySelector('#tijera').addEventListener('click', function () {
-                    //document.querySelector('#textoJugador').innerHTML = texto[0];
-                    decisionUsuario = "tijera"
-                    decisionPC = aleatorio()
-                    jugador.src = imagenes[2]
-                    if(decisionPC==='piedra') pc.src = imagenes[0]
-                    if(decisionPC==='papel') pc.src = imagenes[1]
-                    if(decisionPC==='tijera') pc.src = imagenes[2]
-                    logicaJuego(decisionUsuario, decisionPC)
-                });         */
-
-            
-
-
-
-
-            /* const turnoPc = (evt) => {
-                    let aleatorio = Math.floor(Math.random()* 3);
-                    pc.src = imagenes[aleatorio]
-                    document.querySelector('#textoPc').innerHTML = texto[aleatorio]
-                } 
-
-            const turnoJugador = () => {
-                document.querySelector('#piedra').addEventListener('click', eligePiedra)
-                function eligePiedra () {
-                    jugador.src = imagenes[0];
-                    document.querySelector('#textoJugador').innerHTML = texto[0];
-                    turnoPc()
-                }
-                document.querySelector('#papel').addEventListener('click', eligePapel)
-                function eligePapel () {
-                    jugador.src = imagenes[1];
-                    document.querySelector('#textoJugador').innerHTML = texto[1];
-                    turnoPc()
-                }
-                document.querySelector('#tijera').addEventListener('click', eligeTijera)
-                function eligeTijera () {
-                    jugador.src = imagenes[2];
-                    document.querySelector('#textoJugador').innerHTML = texto[2];
-                    turnoPc()
-                }
-            } 
-            turnoJugador()
-
-            function resultado () {
-                if ((eligePiedra () && aleatorio === 0) || (eligePapel () && aleatorio === 1) || (eligeTijera () && aleatorio === 2)) {
-                    document.querySelector('#resultado').innerHTML = "Empate";
-                } else if ((eligePiedra () && aleatorio === 2) || (eligePapel () && aleatorio === 0) || (eligeTijera () && aleatorio === 1)) {
-                    document.querySelector('#resultado').innerHTML = "Gana el jugador";
-                } else {
-                    document.querySelector('#resultado').innerHTML = "Gana la computadora";
-                }
-            }
-            resultado() */
-         
+            }         
     </script>
 </body>
 </html>
